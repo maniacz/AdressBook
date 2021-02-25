@@ -1,10 +1,10 @@
-﻿using AdressBook.Models;
+﻿using AdressBook.Entieties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdressBook.Cache.Repositories
+namespace AdressBook.Repositories
 {
     public interface IAddressDataRepository
     {

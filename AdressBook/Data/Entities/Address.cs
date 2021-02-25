@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-//todo: zmień nazwę namespace'a na AddressBook.Data.Entities
-namespace AdressBook.Models
+namespace AdressBook.Entieties
 {
     public class Address
     {

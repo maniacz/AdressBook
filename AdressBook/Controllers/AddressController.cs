@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AdressBook.Cache.Repositories;
-using AdressBook.Models;
+using AdressBook.Repositories;
+using AdressBook.Entieties;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
