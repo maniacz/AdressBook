@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AdressBook.Cache.Repositories;
 using AdressBook.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,10 +16,12 @@ namespace AdressBook.Controllers
     public class AddressController : ControllerBase
     {
         private IAddressDataRepository _addressDataRepository;
+        private readonly ILogger _logger;
 
-        public AddressController(IAddressDataRepository addressDataRepository)
+        public AddressController(IAddressDataRepository addressDataRepository, ILogger<AddressController> logger)
         {
             _addressDataRepository = addressDataRepository;
+            _logger = logger;
         }
 
 
@@ -36,14 +39,18 @@ namespace AdressBook.Controllers
             try
             {
                 response.LastSavedAddress = _addressDataRepository.GetLastSavedAddress();
+                _logger.LogInformation("Fetched last saved city.");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 response.ErrorMessage = ex.Message;
             }
 
             return Ok(response.LastSavedAddress);
         }
+
+
 
         // GET api/<AddressController>/5
         [HttpGet("{city}")]
@@ -54,9 +61,11 @@ namespace AdressBook.Controllers
             try
             {
                 response.AddressesByCity = _addressDataRepository.GetAddressesByCity(city);
+                _logger.LogInformation($"Fetched {city} by name.");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 response.ErrorMessage = ex.Message;
             }
 
@@ -65,32 +74,31 @@ namespace AdressBook.Controllers
 
         // POST api/<AddressController>
         [HttpPost]
-        public void Post([FromBody] Address address)
+        public IActionResult Post([FromBody] Address address)
         {
             //todo: dorobić klasę nadrzędną BaseResponse
             var response = new CityResponse();
 
             try
             {
+                //todo: Kodowanie polskich znaków
                 _addressDataRepository.Add(address);
+                _logger.LogInformation($"Added new addres {address.Street} {address.Number} {address.PostalCode} {address.City}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex.Message, ex.StackTrace);
+                response.ErrorMessage = ex.Message;
             }
+
+            return Ok();
         }
 
-        // PUT api/<AddressController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AddressController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //todo: dorobić 
+        //private void LogException(CityResponse out response, Exception ex)
+        //{
+        //    _logger.LogError(ex.Message, ex.StackTrace);
+        //    response.ErrorMessage = ex.Message;
+        //}
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AdressBook.Cache.Repositories;
 using AdressBook.Cache;
+using System.Text;
 
 namespace AdressBook
 {
@@ -21,6 +22,7 @@ namespace AdressBook
             services.AddControllers();
             services.AddScoped<IAddressDataRepository, AddressDataRepository>();
             services.AddSingleton<IAddressCache, AddressCache>();
+            Console.OutputEncoding = Encoding.UTF8;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

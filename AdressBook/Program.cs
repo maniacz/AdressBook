@@ -18,6 +18,14 @@ namespace AdressBook
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging((logBuilder) =>
+                {
+                    logBuilder.ClearProviders();
+                    logBuilder.AddConsole();
+
+                    //todo: To ni¿ej niekonieczne chyba
+                    //logBuilder.AddTraceSource("Information, ActivityTracing");
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
