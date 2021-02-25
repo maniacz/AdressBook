@@ -11,20 +11,19 @@ namespace AdressBook.Repositories
     {
         List<Address> _addresses;
 
-        public AddressDataRepository()
-        {
-            _addresses = new List<Address>()
-            {
-                new Address { City = "bb", Number = "7A/5", PostalCode = "43-300", Street = "3 maja" },
-                new Address { City = "katowice", Number = "144", PostalCode = "41-100", Street = "Chorzowska" }
-            };
-        }
 
         public AddressDataRepository(IAddressCache addressCache)
         {
             _addresses = addressCache.GetCache();
         }
 
+        //todo: komentarze ///
+
+        /// <summary>
+        /// Gets all 
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
         public IEnumerable<Address> GetAddressesByCity(string city = null)
         {
             if (city is null)

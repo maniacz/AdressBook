@@ -22,9 +22,6 @@ namespace AdressBook
                 {
                     logBuilder.ClearProviders();
                     logBuilder.AddConsole();
-
-                    //todo: To ni¿ej niekonieczne chyba
-                    //logBuilder.AddTraceSource("Information, ActivityTracing");
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
