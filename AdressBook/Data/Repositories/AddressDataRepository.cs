@@ -19,6 +19,11 @@ namespace AdressBook.Cache.Repositories
             };
         }
 
+        public AddressDataRepository(IAddressCache addressCache)
+        {
+            _addresses = addressCache.GetCache();
+        }
+
         public IEnumerable<Address> GetAddressesByCity(string city = null)
         {
             if (city is null)
