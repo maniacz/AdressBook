@@ -1,4 +1,4 @@
-﻿using AdressBook.Entities;
+﻿using AdressBook.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace AdressBook.Cache
             InitializeCache();
         }
 
-        public void InitializeCache()
+        private void InitializeCache()
         {
             _cachedAddreses = new List<Address>()
             {

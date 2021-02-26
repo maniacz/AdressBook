@@ -4,7 +4,7 @@ using Moq;
 using System;
 using Xunit;
 using System.Collections.Generic;
-using AdressBook.Entities;
+using AdressBook.Models;
 using System.Linq;
 
 namespace AddressBook.Tests
@@ -17,7 +17,7 @@ namespace AddressBook.Tests
         {
             _addressCache = new Mock<IAddressCache>();
             _addressCache.Setup(c => c.GetCache()).Returns(
-                new List<AdressBook.Entities.Address>()
+                new List<AdressBook.Models.Address>()
                 {
                     new Address { City = "BIELSKO-BIA£A", Number = "7A/5", PostalCode = "43-300", Street = "3 maja" },
                     new Address { City = "KATOWICE", Number = "144", PostalCode = "41-100", Street = "Chorzowska" },

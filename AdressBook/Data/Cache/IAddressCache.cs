@@ -1,4 +1,4 @@
-﻿using AdressBook.Entities;
+﻿using AdressBook.Models;
 using System.Collections.Generic;
 
 namespace AdressBook.Cache
