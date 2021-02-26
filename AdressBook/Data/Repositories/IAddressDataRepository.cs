@@ -1,4 +1,4 @@
-﻿using AdressBook.Models;
+﻿using AdressBook.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

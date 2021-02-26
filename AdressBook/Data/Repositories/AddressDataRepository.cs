@@ -1,5 +1,5 @@
 ﻿using AdressBook.Cache;
-using AdressBook.Models;
+using AdressBook.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +17,6 @@ namespace AdressBook.Repositories
             _addresses = addressCache.GetCache();
         }
 
-        //todo: komentarze ///
-
-        /// <summary>
-        /// Gets all 
-        /// </summary>
-        /// <param name="city"></param>
-        /// <returns></returns>
         public IEnumerable<Address> GetAddressesByCity(string city = null)
         {
             if (city is null)
@@ -44,7 +37,6 @@ namespace AdressBook.Repositories
             return _addresses;
         }
 
-        //todo test Add
         public void Add(Address address)
         {
             _addresses.Add(address);

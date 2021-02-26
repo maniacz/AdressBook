@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using AdressBook.Repositories;
 using AdressBook.Cache;
 using System.Text;
+using AdressBook.Data.Validators;
 
 namespace AdressBook
 {
@@ -21,6 +22,7 @@ namespace AdressBook
         {
             services.AddControllers();
             services.AddScoped<IAddressDataRepository, AddressDataRepository>();
+            services.AddScoped<IAddressValidator, AddressValidator>();
             services.AddSingleton<IAddressCache, AddressCache>();
             Console.OutputEncoding = Encoding.UTF8;
         }

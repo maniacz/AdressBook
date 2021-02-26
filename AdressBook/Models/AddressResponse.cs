@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AdressBook.Models
+namespace AdressBook.Entities
 {
     public class AddressResponse
     {
-        //Tego propsa można wyciągnąć do osobnej klasy np. BaseResponse, po której klasy typu Response
+        //todo: Tego propsa można wyciągnąć do osobnej klasy np. BaseResponse, po której klasy typu Response
         //mogłyby dziedziczyć, gdybyśmy mieli rozbudować aplikację o nowe Responsy
         public string ErrorMessage { get; set; }
 

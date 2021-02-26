@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdressBook.Repositories;
-using AdressBook.Models;
+using AdressBook.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using AdressBook.Data.Validators;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,11 +18,13 @@ namespace AdressBook.Controllers
     {
         private IAddressDataRepository _addressDataRepository;
         private readonly ILogger _logger;
+        private readonly IAddressValidator _addressValidator;
 
-        public AddressController(IAddressDataRepository addressDataRepository, ILogger<AddressController> logger)
+        public AddressController(IAddressDataRepository addressDataRepository, ILogger<AddressController> logger, IAddressValidator addressValidator)
         {
             _addressDataRepository = addressDataRepository;
             _logger = logger;
+            _addressValidator = addressValidator;
         }
 
         // GET: api/<AddressController>
@@ -39,12 +42,11 @@ namespace AdressBook.Controllers
             {
                 _logger.LogError(ex.Message, ex.StackTrace);
                 response.ErrorMessage = ex.Message;
+                return BadRequest(response.ErrorMessage);
             }
 
             return Ok(response.LastSavedAddress);
         }
-
-
 
         // GET api/<AddressController>/5
         [HttpGet("{city}")]
@@ -61,7 +63,7 @@ namespace AdressBook.Controllers
             {
                 _logger.LogError(ex.Message, ex.StackTrace);
                 response.ErrorMessage = ex.Message;
-                //todo: return Error
+                return BadRequest(response.ErrorMessage);
             }
 
             return Ok(response.AddressesByCity);
@@ -75,8 +77,9 @@ namespace AdressBook.Controllers
 
             try
             {
-                address.City.ToUpper();
-                //todo: Kodowanie polskich znaków
+                _addressValidator.Validate(address);
+                address.City = address.City.ToUpper();
+
                 await Task.Run(() => _addressDataRepository.Add(address));
                 _logger.LogInformation($"Added new addres {address.Street} {address.Number} {address.PostalCode} {address.City}");
             }
@@ -84,16 +87,10 @@ namespace AdressBook.Controllers
             {
                 _logger.LogError(ex.Message, ex.StackTrace);
                 response.ErrorMessage = ex.Message;
+                return BadRequest(response.ErrorMessage);
             }
 
             return Ok();
         }
-
-        //todo: dorobić 
-        //private void LogException(CityResponse out response, Exception ex)
-        //{
-        //    _logger.LogError(ex.Message, ex.StackTrace);
-        //    response.ErrorMessage = ex.Message;
-        //}
     }
 }
