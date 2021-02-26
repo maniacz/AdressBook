@@ -19,8 +19,9 @@ namespace AdressBook.Cache
         {
             _cachedAddreses = new List<Address>()
             {
-                new Address { City = "bb", Number = "7A/5", PostalCode = "43-300", Street = "3 maja" },
-                new Address { City = "katowice", Number = "144", PostalCode = "41-100", Street = "Chorzowska" }
+                new Address { City = "BIELSKO-BIAŁA", Number = "7A/5", PostalCode = "43-300", Street = "3 maja" },
+                new Address { City = "KATOWICE", Number = "144", PostalCode = "41-100", Street = "Chorzowska" },
+                new Address { City = "KATOWICE", Number = "2", PostalCode = "40-000", Street = "Stawowa" }
             };
         }
 

@@ -31,7 +31,7 @@ namespace AdressBook.Repositories
                 return GetAll();
             }
 
-            return _addresses.Where(a => a.City.Equals(city.ToLower()));
+            return _addresses.Where(a => a.City.Equals(city.ToUpper()));
         }
 
         public Address GetLastSavedAddress()

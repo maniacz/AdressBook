@@ -81,6 +81,7 @@ namespace AdressBook.Controllers
 
             try
             {
+                address.City.ToUpper();
                 //todo: Kodowanie polskich znaków
                 _addressDataRepository.Add(address);
                 _logger.LogInformation($"Added new addres {address.Street} {address.Number} {address.PostalCode} {address.City}");
