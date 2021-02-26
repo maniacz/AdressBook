@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdressBook.Repositories;
-using AdressBook.Entieties;
+using AdressBook.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -24,21 +24,15 @@ namespace AdressBook.Controllers
             _logger = logger;
         }
 
-
-
-        //TODO: TRZEBA TO PRZEROBIĆ NA WIELOWĄTKOWE ASYNC AWAIT
-
-
-
         // GET: api/<AddressController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            CityResponse response = new CityResponse();
+            AddressResponse response = new AddressResponse();
 
             try
             {
-                response.LastSavedAddress = _addressDataRepository.GetLastSavedAddress();
+                response.LastSavedAddress = await Task.FromResult(_addressDataRepository.GetLastSavedAddress());
                 _logger.LogInformation("Fetched last saved city.");
             }
             catch (Exception ex)
@@ -54,19 +48,20 @@ namespace AdressBook.Controllers
 
         // GET api/<AddressController>/5
         [HttpGet("{city}")]
-        public IActionResult Get(string city)
+        public async Task<IActionResult> Get(string city)
         {
-            CityResponse response = new CityResponse();
+            AddressResponse response = new AddressResponse();
 
             try
             {
-                response.AddressesByCity = _addressDataRepository.GetAddressesByCity(city);
+                response.AddressesByCity = await Task.FromResult(_addressDataRepository.GetAddressesByCity(city));
                 _logger.LogInformation($"Fetched {city} by name.");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex.StackTrace);
                 response.ErrorMessage = ex.Message;
+                //todo: return Error
             }
 
             return Ok(response.AddressesByCity);
@@ -74,16 +69,15 @@ namespace AdressBook.Controllers
 
         // POST api/<AddressController>
         [HttpPost]
-        public IActionResult Post([FromBody] Address address)
+        public async Task<IActionResult> Post([FromBody] Address address)
         {
-            //todo: dorobić klasę nadrzędną BaseResponse
-            var response = new CityResponse();
+            var response = new AddressResponse();
 
             try
             {
                 address.City.ToUpper();
                 //todo: Kodowanie polskich znaków
-                _addressDataRepository.Add(address);
+                await Task.Run(() => _addressDataRepository.Add(address));
                 _logger.LogInformation($"Added new addres {address.Street} {address.Number} {address.PostalCode} {address.City}");
             }
             catch (Exception ex)
